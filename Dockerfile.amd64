@@ -4,21 +4,22 @@
 FROM debian
 
 #
-# Update Debian and install curl, gzip, software-properties-common and tar.
+# Update Debian and install curl, dnsutils, gzip, software-properties-common and
+# tar.
 #
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y curl gzip software-properties-common tar && \
+    apt-get install -y curl dnsutils gzip software-properties-common tar && \
     rm -rf /var/lib/apt/lists/*
 
 #
-# Install AdoptOpenJDK 11.
+# Install Zulu 11.
 #
 RUN cd /usr/local && \
-    curl --insecure -L -O https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz && \
-    tar xfvz OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz && \
-    mv jdk-11.0.7+10 jdk && \
-    rm OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz
+    curl --insecure -L -O https://cdn.azul.com/zulu/bin/zulu11.39.15-ca-jdk11.0.7-linux_x64.tar.gz && \
+    tar xfvz zulu11.39.15-ca-jdk11.0.7-linux_x64.tar.gz && \
+    mv zulu11.39.15-ca-jdk11.0.7-linux_x64 jdk && \
+    rm zulu11.39.15-ca-jdk11.0.7-linux_x64.tar.gz
 
 #
 # Setup PATH
