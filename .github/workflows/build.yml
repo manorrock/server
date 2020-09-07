@@ -16,18 +16,18 @@ jobs:
       run: |
         docker build -f Dockerfile.amd64 -t manorrock/server:amd64-snapshot .
         docker push manorrock/server:amd64-snapshot
-    - name: Build arm image
+    - name: Build arm32v6 image
       run: |
-        docker build -f Dockerfile.arm -t manorrock/server:arm-snapshot .
-        docker push manorrock/server:arm-snapshot
+        docker build -f Dockerfile.arm32v6 -t manorrock/server:arm32v6-snapshot .
+        docker push manorrock/server:arm32v6-snapshot
     - name: Push Docker manifest
       run: |
         export DOCKER_CLI_EXPERIMENTAL=enabled
         docker manifest create manorrock/server:snapshot \
           manorrock/server:amd64-snapshot \
-          manorrock/server:arm-snapshot
+          manorrock/server:arm32v6-snapshot
         docker manifest annotate manorrock/server:snapshot \
           manorrock/server:amd64-snapshot --os linux --arch amd64
         docker manifest annotate manorrock/server:snapshot \
-          manorrock/server:arm-snapshot --os linux --arch arm
+          manorrock/server:arm32v6-snapshot --os linux --arch arm
         docker manifest push manorrock/server:snapshot
