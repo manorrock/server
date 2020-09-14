@@ -16,10 +16,10 @@ RUN apt-get update && \
 # Install Zulu 11.
 #
 RUN cd /usr/local && \
-    curl --insecure -L -O https://cdn.azul.com/zulu/bin/zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz && \
-    tar xfvz zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz && \
-    mv zulu11.41.23-ca-jdk11.0.8-linux_x64 jdk && \
-    rm zulu11.41.23-ca-jdk11.0.8-linux_x64.tar.gz
+    curl --insecure -L -O https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.8%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.8_10.tar.gz && \
+    tar xfvz OpenJDK11U-jdk_x64_linux_hotspot_11.0.8_10.tar.gz && \
+    mv jdk-11.0.8+10 jdk && \
+    rm OpenJDK11U-jdk_x64_linux_hotspot_11.0.8_10.tar.gz
 
 #
 # Setup PATH
