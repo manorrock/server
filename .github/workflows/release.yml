@@ -19,15 +19,22 @@ jobs:
         TAG=${GITHUB_REF}
         INDEX=${TAG%v*}
         VERSION=${TAG:${#INDEX}}
-        docker build -f src/main/docker/Dockerfile.amd64 -t manorrock/server:amd64-$VERSION .
+        docker build -f Dockerfile.amd64 -t manorrock/server:amd64-$VERSION .
         docker push manorrock/server:amd64-$VERSION
-    - name: Build arm image
+    - name: Build arm32v6 image
       run: |
         TAG=${GITHUB_REF}
         INDEX=${TAG%v*}
         VERSION=${TAG:${#INDEX}}
-        docker build -f src/main/docker/Dockerfile.arm -t manorrock/server:arm-$VERSION .
-        docker push manorrock/server:arm-$VERSION
+        docker build -f Dockerfile.arm32v6 -t manorrock/server:arm32v6-$VERSION .
+        docker push manorrock/server:arm32v6-$VERSION
+    - name: Build arm64v8 image
+      run: |
+        TAG=${GITHUB_REF}
+        INDEX=${TAG%v*}
+        VERSION=${TAG:${#INDEX}}
+        docker build -f Dockerfile.arm64v8 -t manorrock/server:arm64v8-$VERSION .
+        docker push manorrock/server:arm64v8-$VERSION
     - name: Push Docker manifest
       run: |
         TAG=${GITHUB_REF}
@@ -36,9 +43,9 @@ jobs:
         export DOCKER_CLI_EXPERIMENTAL=enabled
         docker manifest create manorrock/server:$VERSION \
           manorrock/server:amd64-$VERSION \
-          manorrock/server:arm-$VERSION
+          manorrock/server:arm32v6-$VERSION
         docker manifest annotate manorrock/server:$VERSION \
           manorrock/server:amd64-$VERSION --os linux --arch amd64
         docker manifest annotate manorrock/server:$VERSION \
-          manorrock/server:arm-$VERSION --os linux --arch arm
+          manorrock/server:arm32v6-$VERSION --os linux --arch arm
         docker manifest push manorrock/server:$VERSION
